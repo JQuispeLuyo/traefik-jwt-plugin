@@ -464,7 +464,7 @@ func (jwtPlugin *JwtPlugin) CheckToken(request *http.Request, rw http.ResponseWr
 						withUrl(request.URL.String()).
 						withNetwork(jwtPlugin.remoteAddr(request)).
 						print()
-					return 0, fmt.Errorf("token is expired")
+					return 401, fmt.Errorf("token is expired")
 				}
 			} else if fieldName == "nbf" {
 				if nbfInt, err := strconv.ParseInt(fmt.Sprint(jwtToken.Payload["nbf"]), 10, 64); err != nil || nbfInt > time.Now().Add(1*time.Minute).Unix() {
